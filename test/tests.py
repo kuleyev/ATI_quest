@@ -3,6 +3,7 @@ import requests
 import json
 from utils import conf
 
+
 def test_create_user(supply_url, name):
     url = supply_url + '/user?'
     resp = requests.post(url + 'name=' + name[0] + '&surname=' + name[1])
@@ -15,6 +16,7 @@ def test_get_user(supply_url, get_random_user):
     resp = requests.get(url + '?id=' + str(get_random_user['_id']))
     j = json.loads(resp.text)
     assert j['status'] == 'success'
+
 
 def test_update_user(supply_url, get_random_user, name):
     url = supply_url + '/update?'
@@ -29,12 +31,13 @@ def test_update_user(supply_url, get_random_user, name):
     assert u_j['name'] == name[0]
     assert u_j['surname'] == name[1]
 
+
 def test_delete_user(supply_url, get_random_user):
     url = supply_url + '/delete?'
     id_to_delete = get_random_user['_id']
     resp = requests.post(url + 'id=' + str(id_to_delete))
     j = json.loads(resp.text)
     assert j['status'] == 'success'
-    assert conf.COLLECTION.find_one({'_id': id_to_delete}) == None
+    assert conf.COLLECTION.find_one({'_id': id_to_delete}) is None
 
 

@@ -1,6 +1,5 @@
 from aiohttp import web
 import json
-from pymongo import MongoClient
 from utils import conf
 
 collection = conf.COLLECTION.find({})
